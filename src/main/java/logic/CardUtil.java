@@ -32,27 +32,31 @@ public class CardUtil {
 		return false;
 	}
 	
-	public static ArrayList<UnitCard> getCardsFromFile(String filename){
-		
+	public static ArrayList<UnitCard> getCardsFromFile(String filename) {
+
 		ArrayList<UnitCard> cardsFromFile = new ArrayList<UnitCard>();
 		InputStream inputStream = CardUtil.class.getClassLoader().getResourceAsStream(filename);
-          	if (inputStream == null) {
-                	System.out.println("Cannot find file!");
-                	return null;
-            	}
+		if (inputStream == null) {
+			System.out.println("Cannot find file!");
+			return null;
+		}
 
-            Scanner myReader = new Scanner(inputStream);
+		Scanner myReader = new Scanner(inputStream);
 
-				//TODO: Fill Code below
-				while (myReader.hasNextLine()) {
+		//TODO: Fill Code below
+		try {
+			while (myReader.hasNextLine()) {
+				String line = myReader.nextLine();
 
-					String line = myReader.nextLine();
-					String[] card = line.split(",");
-					cardsFromFile.add(new UnitCard(card[0],Integer.parseInt(card[1]),Integer.parseInt(card[2]),Integer.parseInt(card[3]),card[4]));
-				}
-				myReader.close();
-				return cardsFromFile;
+				String[] card = line.split(",");
+				cardsFromFile.add(new UnitCard(card[0], Integer.parseInt(card[1]), Integer.parseInt(card[2]), Integer.parseInt(card[3]), card[4]));
 			}
+		} catch (NumberFormatException e) {
+				System.out.println("File contain string with incorrect format!");
+				return null;
+		}
+			myReader.close();
+			return cardsFromFile;
 	}
 
 	public static void printCardList(ArrayList<UnitCard> cardList, boolean verbose) {

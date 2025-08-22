@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class UnitDeck {
-    ArrayList<CardCounter> cardsInDeck;
-    String deckName;
+    private ArrayList<CardCounter> cardsInDeck;
+    private String deckName;
 
     public UnitDeck(String deckName) {
         setDeckName(deckName);
