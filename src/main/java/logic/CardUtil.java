@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class CardUtil {
 	public static boolean isExistsInList(UnitCard card, ArrayList<UnitCard> list) {
 		
 		//TODO: Fill Code
+		if (list.contains(card)) return true;
 		return false;
 
 	}
@@ -17,13 +19,16 @@ public class CardUtil {
 	public static boolean isExistsInList(UnitDeck deck, ArrayList<UnitDeck> list) {
 		
 		//TODO: Fill Code
+		if (list.contains(deck)) return true;
 		return false;
-
 	}
 	
 	public static boolean cardExistsInDeckList(ArrayList<UnitDeck> deckList, UnitCard cardToTest) {
 		
 		//TODO: Fill Code
+		for (int i = 0; i < deckList.size(); i++){
+			if (deckList.get(i).existsInDeck(cardToTest)) return true;
+		}
 		return false;
 	}
 	
@@ -36,12 +41,18 @@ public class CardUtil {
                 	return null;
             	}
 
-            	Scanner myReader = new Scanner(inputStream);
+            Scanner myReader = new Scanner(inputStream);
 
+				//TODO: Fill Code below
+				while (myReader.hasNextLine()) {
 
-		//TODO: Fill Code below
-		
-		return null;
+					String line = myReader.nextLine();
+					String[] card = line.split(",");
+					cardsFromFile.add(new UnitCard(card[0],Integer.parseInt(card[1]),Integer.parseInt(card[2]),Integer.parseInt(card[3]),card[4]));
+				}
+				myReader.close();
+				return cardsFromFile;
+			}
 	}
 
 	public static void printCardList(ArrayList<UnitCard> cardList, boolean verbose) {
