@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import logic.CardCounter;
 import logic.UnitCard;
 
-public class CardCounterTest {
+public claCardCounterTest {
 	
 	UnitCard uc1;
 	UnitCard uc2;

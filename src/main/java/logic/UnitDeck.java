@@ -9,6 +9,7 @@ public class UnitDeck {
 
     public UnitDeck(String deckName) {
         setDeckName(deckName);
+        cardsInDeck = new ArrayList<>();
     }
 
     public ArrayList<CardCounter> getCardsInDeck() {
@@ -29,31 +30,45 @@ public class UnitDeck {
 
     public void addCard(UnitCard newCard, int count){
         if (count <= 0) return;
-        CardCounter counter = new CardCounter(newCard, count);
-        if (this.existsInDeck(newCard)) {
-            cardsInDeck.get(cardsInDeck.indexOf(counter)).setCount(cardsInDeck.get(cardsInDeck.indexOf(counter)).getCount()+count);
-        } else {
-            cardsInDeck.add(new CardCounter(newCard, count));
+        for (CardCounter cardCounter : cardsInDeck) {
+            if (cardCounter.getCard().equals(newCard)) {
+                cardCounter.setCount(cardCounter.getCount() + count);
+                return;
+            }
         }
+        cardsInDeck.add(new CardCounter(newCard, count));
     }
 
     public void removeCard(UnitCard toRemove, int count){
         if (count <= 0 || !this.existsInDeck(toRemove)) return;
-        CardCounter counter = new CardCounter(toRemove, count);
-        if (cardsInDeck.get(cardsInDeck.indexOf(counter)).getCount() - count <= 0){
-            cardsInDeck.remove(counter);
-        } else {
-            cardsInDeck.get(cardsInDeck.indexOf(counter)).setCount(cardsInDeck.get(cardsInDeck.indexOf(counter)).getCount()-count);
+        for (CardCounter cardCounter : cardsInDeck) {
+            if (cardCounter.getCard().equals(toRemove)) {
+                int newCount = cardCounter.getCount() - count;
+                if (newCount <= 0) {
+                    cardsInDeck.remove(cardCounter);
+                } else {
+                    cardCounter.setCount(newCount);
+                }
+                return;
+            }
         }
     }
 
     public int cardCount(){
-        return cardsInDeck.size();
+        int sum = 0;
+        for (CardCounter cardCounter : cardsInDeck) {
+            sum += cardCounter.getCount();
+        }
+        return sum;
     }
 
     public boolean existsInDeck(UnitCard card){
-        CardCounter counter = new CardCounter(card, 0);
-        return cardsInDeck.contains(counter);
+        for (CardCounter cardCounter : cardsInDeck) {
+            if (cardCounter.getCard().equals(card)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean equals(Object o) {
